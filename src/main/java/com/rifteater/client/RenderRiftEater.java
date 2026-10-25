@@ -2,36 +2,58 @@
 package com.rifteater.client;
 
 import com.rifteater.entity.EntityRiftEater;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.entity.RenderLiving;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.util.ResourceLocation;
 
-public class RenderRiftEater extends RenderLiving<EntityRiftEater> {
+import net.minecraft.client.Minecraft;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 
-    private static final ResourceLocation TEXTURE =
-            new ResourceLocation(
-                    "rifteater",
-                    "textures/entity/rift_eater.png"
-            );
+import java.util.Random;
 
-    public RenderRiftEater(RenderManager manager) {
-        super(manager, new ModelRiftEater(), 0.8F);
-    }
+public class RiftEaterParticles {
 
-    @Override
-    protected ResourceLocation getEntityTexture(
-            EntityRiftEater entity
-    ) {
-        return TEXTURE;
-    }
+    private final Random random = new Random();
 
-    @Override
-    protected void preRenderCallback(
-            EntityRiftEater entity,
-            float partialTickTime
-    ) {
-        // Увеличиваем босса, сохраняя пропорции модели.
-        GlStateManager.scale(1.25F, 1.25F, 1.25F);
+    @SubscribeEvent
+    public void onWorldTick(TickEvent.WorldTickEvent event) {
+        if (event.phase != TickEvent.Phase.END) {
+            return;
+        }
+
+        if (event.world.isRemote) {
+            Minecraft minecraft = Minecraft.getMinecraft();
+
+            if (minecraft.world != event.world || minecraft.player == null) {
+                return;
+            }
+
+            for (EntityRiftEater boss : event.world.getEntities(
+                    EntityRiftEater.class,
+                    entity -> entity.isEntityAlive()
+            )) {
+                if (minecraft.player.getDistanceSq(boss) > 32.0D * 32.0D) {
+                    continue;
+                }
+
+                if (random.nextInt(3) != 0) {
+                    continue;
+                }
+
+                double angle = random.nextDouble() * Math.PI * 2.0D;
+                double radius = 0.8D + random.nextDouble() * 0.8D;
+
+                double x = boss.posX + Math.cos(angle) * radius;
+                double y = boss.posY + random.nextDouble() * boss.height;
+                double z = boss.posZ + Math.sin(angle) * radius;
+
+                event.world.spawnParticle(
+                        EnumParticleTypes.PORTAL,
+                        x, y, z,
+                        (random.nextDouble() - 0.5D) * 0.08D,
+                        random.nextDouble() * 0.08D,
+                        (random.nextDouble() - 0.5D) * 0.08D
+                );
+            }
+        }
     }
 }
