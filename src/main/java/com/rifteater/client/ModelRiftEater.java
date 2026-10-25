@@ -10,102 +10,143 @@ public class ModelRiftEater extends ModelBase {
     private final ModelRenderer body;
     private final ModelRenderer head;
     private final ModelRenderer core;
+
+    private final ModelRenderer leftShoulder;
+    private final ModelRenderer rightShoulder;
     private final ModelRenderer leftArm;
     private final ModelRenderer rightArm;
+    private final ModelRenderer leftClaw;
+    private final ModelRenderer rightClaw;
+
     private final ModelRenderer leftLeg;
     private final ModelRenderer rightLeg;
+    private final ModelRenderer leftFoot;
+    private final ModelRenderer rightFoot;
+
     private final ModelRenderer leftHorn;
     private final ModelRenderer rightHorn;
-    private final ModelRenderer backSpike1;
-    private final ModelRenderer backSpike2;
-    private final ModelRenderer tentacleLeft;
-    private final ModelRenderer tentacleRight;
+    private final ModelRenderer backSpikes;
+    private final ModelRenderer leftTentacle;
+    private final ModelRenderer rightTentacle;
 
     public ModelRiftEater() {
         textureWidth = 128;
         textureHeight = 128;
 
-        // Torso
+        // Основной корпус: вытянутый, суженный силуэт.
         body = new ModelRenderer(this, 32, 0);
-        body.setRotationPoint(0F, -2F, 0F);
-        body.addBox(-4F, -7F, -2.5F, 8, 12, 5, 0F);
+        body.setRotationPoint(0F, 1F, 0F);
+        body.addBox(-4F, -8F, -2.5F, 8, 12, 5, 0F);
 
-        // Head
+        // Голова немного утоплена в плечи.
         head = new ModelRenderer(this, 0, 0);
-        head.setRotationPoint(0F, -7F, 0F);
-        head.addBox(-3F, -5F, -3F, 6, 6, 6, 0F);
+        head.setRotationPoint(0F, -7F, -0.3F);
+        head.addBox(-2.5F, -4.5F, -2.5F, 5, 5, 5, 0F);
         body.addChild(head);
 
-        // Glowing chest core
+        // Энергетическое ядро на груди.
         core = new ModelRenderer(this, 72, 0);
-        core.setRotationPoint(0F, -1F, -2.6F);
-        core.addBox(-1.5F, -2F, -0.5F, 3, 4, 1, 0F);
+        core.setRotationPoint(0F, -1.5F, -2.55F);
+        core.addBox(-1.5F, -2F, -0.4F, 3, 4, 1, 0F);
         body.addChild(core);
 
-        // Arms
+        // Наклонённые массивные наплечники.
+        leftShoulder = new ModelRenderer(this, 84, 44);
+        leftShoulder.setRotationPoint(3.5F, -6F, 0F);
+        leftShoulder.addBox(-1F, -2F, -2F, 4, 5, 4, 0F);
+        leftShoulder.rotateAngleZ = -0.25F;
+        body.addChild(leftShoulder);
+
+        rightShoulder = new ModelRenderer(this, 100, 44);
+        rightShoulder.setRotationPoint(-3.5F, -6F, 0F);
+        rightShoulder.addBox(-3F, -2F, -2F, 4, 5, 4, 0F);
+        rightShoulder.rotateAngleZ = 0.25F;
+        body.addChild(rightShoulder);
+
+        // Длинные руки.
         leftArm = new ModelRenderer(this, 0, 32);
         leftArm.setRotationPoint(4F, -5F, 0F);
-        leftArm.addBox(-1F, -1F, -1.5F, 2, 13, 3, 0F);
+        leftArm.addBox(-1F, -1F, -1.5F, 2, 11, 3, 0F);
         body.addChild(leftArm);
 
         rightArm = new ModelRenderer(this, 20, 32);
         rightArm.setRotationPoint(-4F, -5F, 0F);
-        rightArm.addBox(-1F, -1F, -1.5F, 2, 13, 3, 0F);
+        rightArm.addBox(-1F, -1F, -1.5F, 2, 11, 3, 0F);
         body.addChild(rightArm);
 
-        // Legs
+        // Когти на концах рук.
+        leftClaw = new ModelRenderer(this, 84, 24);
+        leftClaw.setRotationPoint(0F, 9F, 0F);
+        leftClaw.addBox(-0.5F, 0F, -1F, 1, 4, 1, 0F);
+        leftClaw.rotateAngleX = -0.25F;
+        leftArm.addChild(leftClaw);
+
+        rightClaw = new ModelRenderer(this, 100, 24);
+        rightClaw.setRotationPoint(0F, 9F, 0F);
+        rightClaw.addBox(-0.5F, 0F, 0F, 1, 4, 1, 0F);
+        rightClaw.rotateAngleX = 0.25F;
+        rightArm.addChild(rightClaw);
+
+        // Ноги разной длины для асимметричного силуэта.
         leftLeg = new ModelRenderer(this, 40, 32);
-        leftLeg.setRotationPoint(2F, 4F, 0F);
-        leftLeg.addBox(-1.5F, 0F, -1.5F, 3, 12, 3, 0F);
+        leftLeg.setRotationPoint(2F, 3F, 0F);
+        leftLeg.addBox(-1.5F, 0F, -1.5F, 3, 10, 3, 0F);
         body.addChild(leftLeg);
 
         rightLeg = new ModelRenderer(this, 60, 32);
-        rightLeg.setRotationPoint(-2F, 4F, 0F);
-        rightLeg.addBox(-1.5F, 0F, -1.5F, 3, 12, 3, 0F);
+        rightLeg.setRotationPoint(-2F, 3F, 0F);
+        rightLeg.addBox(-1.5F, 0F, -1.5F, 3, 11, 3, 0F);
         body.addChild(rightLeg);
 
-        // Horns
+        // Ступни с выступающими носками.
+        leftFoot = new ModelRenderer(this, 0, 72);
+        leftFoot.setRotationPoint(0F, 9F, -0.2F);
+        leftFoot.addBox(-1.5F, 0F, -2F, 3, 2, 4, 0F);
+        leftLeg.addChild(leftFoot);
+
+        rightFoot = new ModelRenderer(this, 16, 72);
+        rightFoot.setRotationPoint(0F, 10F, -0.2F);
+        rightFoot.addBox(-1.5F, 0F, -2F, 3, 2, 4, 0F);
+        rightLeg.addChild(rightFoot);
+
+        // Два длинных рога.
         leftHorn = new ModelRenderer(this, 84, 24);
-        leftHorn.setRotationPoint(2F, -4F, 0F);
-        leftHorn.addBox(-0.5F, -7F, -0.5F, 1, 7, 1, 0F);
-        leftHorn.rotateAngleZ = -0.45F;
+        leftHorn.setRotationPoint(1.5F, -3.5F, 0F);
+        leftHorn.addBox(-0.5F, -7F, -0.5F, 1, 8, 1, 0F);
+        leftHorn.rotateAngleZ = -0.5F;
         head.addChild(leftHorn);
 
         rightHorn = new ModelRenderer(this, 100, 24);
-        rightHorn.setRotationPoint(-2F, -4F, 0F);
-        rightHorn.addBox(-0.5F, -6F, -0.5F, 1, 6, 1, 0F);
-        rightHorn.rotateAngleZ = 0.35F;
+        rightHorn.setRotationPoint(-1.5F, -3.5F, 0F);
+        rightHorn.addBox(-0.5F, -6F, -0.5F, 1, 7, 1, 0F);
+        rightHorn.rotateAngleZ = 0.4F;
         head.addChild(rightHorn);
 
-        // Back spikes
-        backSpike1 = new ModelRenderer(this, 84, 44);
-        backSpike1.setRotationPoint(2F, -5F, 1.5F);
-        backSpike1.addBox(-0.5F, -5F, -0.5F, 1, 6, 1, 0F);
-        backSpike1.rotateAngleX = -0.4F;
-        backSpike1.rotateAngleZ = -0.5F;
-        body.addChild(backSpike1);
+        // Несколько выступающих шипов на спине.
+        backSpikes = new ModelRenderer(this, 84, 44);
+        backSpikes.setRotationPoint(0F, -5F, 1.5F);
+        backSpikes.addBox(-2F, -5F, 0F, 1, 6, 1, 0F);
+        backSpikes.addBox(1F, -6F, 0F, 1, 7, 1, 0F);
+        backSpikes.addBox(-0.5F, -3F, 0F, 1, 4, 1, 0F);
+        backSpikes.rotateAngleX = -0.25F;
+        body.addChild(backSpikes);
 
-        backSpike2 = new ModelRenderer(this, 100, 44);
-        backSpike2.setRotationPoint(-2F, -2F, 1.5F);
-        backSpike2.addBox(-0.5F, -4F, -0.5F, 1, 5, 1, 0F);
-        backSpike2.rotateAngleX = -0.5F;
-        backSpike2.rotateAngleZ = 0.45F;
-        body.addChild(backSpike2);
+        // Длинные изогнутые отростки позади корпуса.
+        leftTentacle = new ModelRenderer(this, 0, 72);
+        leftTentacle.setRotationPoint(3F, 1F, 1.5F);
+        leftTentacle.addBox(-0.5F, 0F, 0F, 1, 5, 1, 0F);
+        leftTentacle.addBox(0.5F, 4F, 0F, 1, 5, 1, 0F);
+        leftTentacle.addBox(1.5F, 8F, 0F, 1, 4, 1, 0F);
+        leftTentacle.rotateAngleZ = -0.35F;
+        body.addChild(leftTentacle);
 
-        // Tentacles
-        tentacleLeft = new ModelRenderer(this, 0, 72);
-        tentacleLeft.setRotationPoint(3F, 2F, 1F);
-        tentacleLeft.addBox(-0.5F, 0F, -0.5F, 1, 10, 1, 0F);
-        tentacleLeft.rotateAngleX = -0.35F;
-        tentacleLeft.rotateAngleZ = -0.6F;
-        body.addChild(tentacleLeft);
-
-        tentacleRight = new ModelRenderer(this, 16, 72);
-        tentacleRight.setRotationPoint(-3F, 1F, 1F);
-        tentacleRight.addBox(-0.5F, 0F, -0.5F, 1, 9, 1, 0F);
-        tentacleRight.rotateAngleX = -0.25F;
-        tentacleRight.rotateAngleZ = 0.55F;
-        body.addChild(tentacleRight);
+        rightTentacle = new ModelRenderer(this, 16, 72);
+        rightTentacle.setRotationPoint(-3F, 1F, 1.5F);
+        rightTentacle.addBox(-0.5F, 0F, 0F, 1, 5, 1, 0F);
+        rightTentacle.addBox(-1.5F, 4F, 0F, 1, 5, 1, 0F);
+        rightTentacle.addBox(-2.5F, 8F, 0F, 1, 4, 1, 0F);
+        rightTentacle.rotateAngleZ = 0.35F;
+        body.addChild(rightTentacle);
     }
 
     @Override
@@ -136,10 +177,15 @@ public class ModelRiftEater extends ModelBase {
         rightArm.rotateAngleX =
                 (float) Math.sin(ageInTicks * 0.08F + Math.PI) * 0.12F;
 
-        tentacleLeft.rotateAngleZ =
-                -0.6F + (float) Math.sin(ageInTicks * 0.10F) * 0.12F;
-        tentacleRight.rotateAngleZ =
-                0.55F + (float) Math.sin(ageInTicks * 0.10F + 1.5F) * 0.12F;
+        leftShoulder.rotateAngleZ =
+                -0.25F + (float) Math.sin(ageInTicks * 0.06F) * 0.04F;
+        rightShoulder.rotateAngleZ =
+                0.25F - (float) Math.sin(ageInTicks * 0.06F) * 0.04F;
+
+        leftTentacle.rotateAngleZ =
+                -0.35F + (float) Math.sin(ageInTicks * 0.10F) * 0.12F;
+        rightTentacle.rotateAngleZ =
+                0.35F + (float) Math.sin(ageInTicks * 0.10F + 1.5F) * 0.12F;
 
         core.rotateAngleX =
                 (float) Math.sin(ageInTicks * 0.12F) * 0.08F;
