@@ -23,18 +23,16 @@ public final class ModItems {
 
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {
-        event.getRegistry().register(
-            new ItemSummoningSigil()
-                .setRegistryName(RiftEater.MODID, "summoning_sigil")
-                .setTranslationKey("rifteater.summoning_sigil")
-                .setCreativeTab(RiftEater.TAB)
-        );
+        Item sigil = new ItemSummoningSigil();
+        sigil.setRegistryName(RiftEater.MODID, "summoning_sigil");
+        sigil.setTranslationKey("rifteater.summoning_sigil");
+        sigil.setCreativeTab(RiftEater.TAB);
+        event.getRegistry().register(sigil);
 
-        event.getRegistry().register(
-            new ItemDarkMatter()
-                .setRegistryName(RiftEater.MODID, "dark_matter")
-                ..setTranslationKey("rifteater.dark_matter")
-                .setCreativeTab(RiftEater.TAB)
-        );
+        Item darkMatter = new ItemDarkMatter();
+        darkMatter.setRegistryName(RiftEater.MODID, "dark_matter");
+        darkMatter.setTranslationKey("rifteater.dark_matter");
+        darkMatter.setCreativeTab(RiftEater.TAB);
+        event.getRegistry().register(darkMatter);
     }
 }
