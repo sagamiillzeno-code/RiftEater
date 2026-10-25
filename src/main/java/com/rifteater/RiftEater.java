@@ -11,7 +11,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-
+import com.rifteater.client.RiftEaterParticles;
+import net.minecraftforge.common.MinecraftForge;
 @Mod(
     modid = RiftEater.MODID,
     name = RiftEater.NAME,
@@ -38,9 +39,11 @@ public class RiftEater {
     public static CommonProxy proxy;
 
     @Mod.EventHandler
-    public void preInit(FMLPreInitializationEvent event) {
-        ModEntities.init();
-        proxy.preInit();
+    public void preInit(FMLPreInitializationEvent event) 
+    {
+      ModEntities.init();
+      proxy.preInit();
+      MinecraftForge.EVENT_BUS.register(new RiftEaterParticles());
     }
 
     @Mod.EventHandler
