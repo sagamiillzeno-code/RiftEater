@@ -30,7 +30,7 @@ jobs:
           test -d src/main/java
           echo "Project files found"
 
-            - name: Set up Gradle
+      - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '6.9.4'
