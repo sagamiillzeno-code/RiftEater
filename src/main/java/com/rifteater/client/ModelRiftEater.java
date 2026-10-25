@@ -25,20 +25,24 @@ public class ModelRiftEater extends ModelBase {
         textureWidth = 128;
         textureHeight = 128;
 
+        // Torso
         body = new ModelRenderer(this, 32, 0);
         body.setRotationPoint(0F, -2F, 0F);
         body.addBox(-4F, -7F, -2.5F, 8, 12, 5, 0F);
 
+        // Head
         head = new ModelRenderer(this, 0, 0);
         head.setRotationPoint(0F, -7F, 0F);
         head.addBox(-3F, -5F, -3F, 6, 6, 6, 0F);
         body.addChild(head);
 
+        // Glowing chest core
         core = new ModelRenderer(this, 72, 0);
         core.setRotationPoint(0F, -1F, -2.6F);
         core.addBox(-1.5F, -2F, -0.5F, 3, 4, 1, 0F);
         body.addChild(core);
 
+        // Arms
         leftArm = new ModelRenderer(this, 0, 32);
         leftArm.setRotationPoint(4F, -5F, 0F);
         leftArm.addBox(-1F, -1F, -1.5F, 2, 13, 3, 0F);
@@ -46,9 +50,10 @@ public class ModelRiftEater extends ModelBase {
 
         rightArm = new ModelRenderer(this, 20, 32);
         rightArm.setRotationPoint(-4F, -5F, 0F);
-        rightArm.addBox(-1F, -1F, -1.5F, 2, 11, 3, 0F);
+        rightArm.addBox(-1F, -1F, -1.5F, 2, 13, 3, 0F);
         body.addChild(rightArm);
 
+        // Legs
         leftLeg = new ModelRenderer(this, 40, 32);
         leftLeg.setRotationPoint(2F, 4F, 0F);
         leftLeg.addBox(-1.5F, 0F, -1.5F, 3, 12, 3, 0F);
@@ -56,21 +61,23 @@ public class ModelRiftEater extends ModelBase {
 
         rightLeg = new ModelRenderer(this, 60, 32);
         rightLeg.setRotationPoint(-2F, 4F, 0F);
-        rightLeg.addBox(-1.5F, 0F, -1.5F, 3, 10, 3, 0F);
+        rightLeg.addBox(-1.5F, 0F, -1.5F, 3, 12, 3, 0F);
         body.addChild(rightLeg);
 
+        // Horns
         leftHorn = new ModelRenderer(this, 84, 24);
         leftHorn.setRotationPoint(2F, -4F, 0F);
-        leftHorn.addBox(-0.5F, -7F, -0.5F, 1, 8, 1, 0F);
+        leftHorn.addBox(-0.5F, -7F, -0.5F, 1, 7, 1, 0F);
         leftHorn.rotateAngleZ = -0.45F;
         head.addChild(leftHorn);
 
         rightHorn = new ModelRenderer(this, 100, 24);
         rightHorn.setRotationPoint(-2F, -4F, 0F);
-        rightHorn.addBox(-0.5F, -5F, -0.5F, 1, 6, 1, 0F);
+        rightHorn.addBox(-0.5F, -6F, -0.5F, 1, 6, 1, 0F);
         rightHorn.rotateAngleZ = 0.35F;
         head.addChild(rightHorn);
 
+        // Back spikes
         backSpike1 = new ModelRenderer(this, 84, 44);
         backSpike1.setRotationPoint(2F, -5F, 1.5F);
         backSpike1.addBox(-0.5F, -5F, -0.5F, 1, 6, 1, 0F);
@@ -85,6 +92,7 @@ public class ModelRiftEater extends ModelBase {
         backSpike2.rotateAngleZ = 0.45F;
         body.addChild(backSpike2);
 
+        // Tentacles
         tentacleLeft = new ModelRenderer(this, 0, 72);
         tentacleLeft.setRotationPoint(3F, 2F, 1F);
         tentacleLeft.addBox(-0.5F, 0F, -0.5F, 1, 10, 1, 0F);
