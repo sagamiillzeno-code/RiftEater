@@ -4,6 +4,7 @@ package com.rifteater.registry;
 import com.rifteater.RiftEater;
 import com.rifteater.item.ItemDarkMatter;
 import com.rifteater.item.ItemSummoningSigil;
+
 import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -25,14 +26,14 @@ public final class ModItems {
         event.getRegistry().register(
             new ItemSummoningSigil()
                 .setRegistryName(RiftEater.MODID, "summoning_sigil")
-                .setUnlocalizedName(RiftEater.MODID + ".summoning_sigil")
+                .setUnlocalizedName("rifteater.summoning_sigil")
                 .setCreativeTab(RiftEater.TAB)
         );
 
         event.getRegistry().register(
             new ItemDarkMatter()
                 .setRegistryName(RiftEater.MODID, "dark_matter")
-                .setUnlocalizedName(RiftEater.MODID + ".dark_matter")
+                .setUnlocalizedName("rifteater.dark_matter")
                 .setCreativeTab(RiftEater.TAB)
         );
     }
