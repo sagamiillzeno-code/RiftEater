@@ -26,14 +26,14 @@ public final class ModItems {
         event.getRegistry().register(
             new ItemSummoningSigil()
                 .setRegistryName(RiftEater.MODID, "summoning_sigil")
-                .setUnlocalizedName("rifteater.summoning_sigil")
+                .setTranslationKey("rifteater.summoning_sigil")
                 .setCreativeTab(RiftEater.TAB)
         );
 
         event.getRegistry().register(
             new ItemDarkMatter()
                 .setRegistryName(RiftEater.MODID, "dark_matter")
-                .setUnlocalizedName("rifteater.dark_matter")
+                ..setTranslationKey("rifteater.dark_matter")
                 .setCreativeTab(RiftEater.TAB)
         );
     }
