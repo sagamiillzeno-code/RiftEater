@@ -1,5 +1,5 @@
 
-name: Build RiftEater
+name: Build RiftEater Forge 1.12.2
 
 on:
   push:
@@ -20,69 +20,26 @@ jobs:
           distribution: temurin
           java-version: '8'
 
-      - name: Install unzip and download Gradle
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y unzip
-          curl -L --fail -o gradle.zip \
-            https://services.gradle.org/distributions/gradle-4.9-bin.zip
-          unzip -q gradle.zip
-          echo "$GITHUB_WORKSPACE/gradle-4.9/bin" >> "$GITHUB_PATH"
-
-      
-      - name: Extract source archive
+      - name: Check project files
         run: |
           set -euo pipefail
-          test -f RiftEater_Source_Forge_1.12.2.zip
-          unzip -q RiftEater_Source_Forge_1.12.2.zip -d extracted
-          test -f extracted/RiftEater/build.gradle
+          test -f build.gradle
+          test -d src/main/java
+          echo "Project files found"
+          find src/main/java -type f -name '*.java'
 
-          sed -i "s/ForgeGradle:2.3-SNAPSHOT/ForgeGradle:3.0.197/" extracted/RiftEater/build.gradle
-          sed -i "s/net.minecraftforge.gradle.forge/net.minecraftforge.gradle/" extracted/RiftEater/build.gradle
-
-          python3 - <<'PY'
-          from pathlib import Path
-          import re
-
-          p = Path("extracted/RiftEater/build.gradle")
-          s = p.read_text()
-
-          s = s.replace(
-              "version = '1.12.2-14.23.5.2859'",
-              "mappings channel: 'stable', version: '39-1.12'"
-          )
-          s = s.replace("    runDir = 'run'\n", "")
-          s = s.replace("    mappings = 'stable_39'\n", "")
-
-          s, count = re.subn(
-              r'(?m)^dependencies \{\s*\n\}',
-              "dependencies {\n"
-              "    minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2859'\n"
-              "}",
-              s,
-              count=1
-          )
-
-          if count != 1:
-              raise SystemExit("Не удалось обновить блок dependencies")
-
-          if "version = '1.12.2-14.23.5.2859'" in s:
-              raise SystemExit("Старая настройка Minecraft осталась в файле")
-
-          p.write_text(s)
-          print("Конфигурация ForgeGradle 3 обновлена")
-          PY
-
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
 
       - name: Build mod
-        working-directory: extracted/RiftEater
-        run: gradle --no-daemon clean build
-
+        run: |
+          set -euo pipefail
+          gradle --version
+          gradle --no-daemon build
 
       - name: Upload mod JAR
         uses: actions/upload-artifact@v4
         with:
-          name: RiftEater-1.12.2
-          path: extracted/RiftEater/build/libs/*.jar
+          name: RiftEater-Forge-1.12.2
+          path: build/libs/*.jar
           if-no-files-found: error
-          
