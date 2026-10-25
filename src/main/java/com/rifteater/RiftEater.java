@@ -46,6 +46,7 @@ public class RiftEater {
     public void preInit(FMLPreInitializationEvent event) {
         ModEntities.init();
         proxy.preInit();
+        MinecraftForge.EVENT_BUS.register(proxy);
         MinecraftForge.EVENT_BUS.register(new RiftEaterParticles());
     }
 
