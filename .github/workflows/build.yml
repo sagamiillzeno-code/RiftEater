@@ -29,15 +29,19 @@ jobs:
           unzip -q gradle.zip
           echo "$GITHUB_WORKSPACE/gradle-4.9/bin" >> "$GITHUB_PATH"
 
+      
       - name: Extract source archive
         run: |
           test -f RiftEater_Source_Forge_1.12.2.zip
           unzip -q RiftEater_Source_Forge_1.12.2.zip -d extracted
           test -f extracted/RiftEater/build.gradle
+          sed -i "s/ForgeGradle:2.3-SNAPSHOT/ForgeGradle:3.0.197/" extracted/RiftEater/build.gradle
+          sed -i "s/net.minecraftforge.gradle.forge/net.minecraftforge.gradle/" extracted/RiftEater/build.gradle
 
       - name: Build mod
         working-directory: extracted/RiftEater
         run: gradle --no-daemon clean build
+
 
       - name: Upload mod JAR
         uses: actions/upload-artifact@v4
