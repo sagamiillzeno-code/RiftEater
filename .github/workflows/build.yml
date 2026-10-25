@@ -32,11 +32,47 @@ jobs:
       
       - name: Extract source archive
         run: |
+          set -euo pipefail
           test -f RiftEater_Source_Forge_1.12.2.zip
           unzip -q RiftEater_Source_Forge_1.12.2.zip -d extracted
           test -f extracted/RiftEater/build.gradle
+
           sed -i "s/ForgeGradle:2.3-SNAPSHOT/ForgeGradle:3.0.197/" extracted/RiftEater/build.gradle
           sed -i "s/net.minecraftforge.gradle.forge/net.minecraftforge.gradle/" extracted/RiftEater/build.gradle
+
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          p = Path("extracted/RiftEater/build.gradle")
+          s = p.read_text()
+
+          s = s.replace(
+              "version = '1.12.2-14.23.5.2859'",
+              "mappings channel: 'stable', version: '39-1.12'"
+          )
+          s = s.replace("    runDir = 'run'\n", "")
+          s = s.replace("    mappings = 'stable_39'\n", "")
+
+          s, count = re.subn(
+              r'(?m)^dependencies \{\s*\n\}',
+              "dependencies {\n"
+              "    minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2859'\n"
+              "}",
+              s,
+              count=1
+          )
+
+          if count != 1:
+              raise SystemExit("Не удалось обновить блок dependencies")
+
+          if "version = '1.12.2-14.23.5.2859'" in s:
+              raise SystemExit("Старая настройка Minecraft осталась в файле")
+
+          p.write_text(s)
+          print("Конфигурация ForgeGradle 3 обновлена")
+          PY
+
 
       - name: Build mod
         working-directory: extracted/RiftEater
